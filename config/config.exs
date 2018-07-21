@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure your application as:
 #
-#     config :api_demo, key: :value
+#     config :httpbin_proxy, key: :value
 #
 # and access this configuration in your application as:
 #
-#     Application.get_env(:api_demo, :key)
+#     Application.get_env(:httpbin_proxy, :key)
 #
 # You can also configure a 3rd-party app:
 #

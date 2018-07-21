@@ -1,4 +1,4 @@
-defmodule ApiDemo.Router do
+defmodule HttpbinProxy.Router do
   @host "httpbin.org"
 
   use Plug.Router

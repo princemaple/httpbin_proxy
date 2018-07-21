@@ -1,4 +1,4 @@
-defmodule ApiDemo.Application do
+defmodule HttpbinProxy.Application do
   @moduledoc false
 
   use Application
@@ -7,12 +7,12 @@ defmodule ApiDemo.Application do
     children = [
       Plug.Adapters.Cowboy2.child_spec(
         scheme: :http,
-        plug: ApiDemo.Router,
+        plug: HttpbinProxy.Router,
         options: [port: 80]
       )
     ]
 
-    opts = [strategy: :one_for_one, name: ApiDemo.Supervisor]
+    opts = [strategy: :one_for_one, name: HttpbinProxy.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

@@ -1,9 +1,9 @@
-defmodule ApiDemo.MixProject do
+defmodule HttpbinProxy.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :api_demo,
+      app: :httpbin_proxy,
       version: "0.1.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
@@ -15,7 +15,7 @@ defmodule ApiDemo.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {ApiDemo.Application, []}
+      mod: {HttpbinProxy.Application, []}
     ]
   end
 

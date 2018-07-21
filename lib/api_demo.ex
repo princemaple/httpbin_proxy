@@ -1,5 +1,5 @@
-defmodule ApiDemo do
+defmodule HttpbinProxy do
   @moduledoc """
-  Documentation for ApiDemo.
+  Documentation for HttpbinProxy.
   """
 end

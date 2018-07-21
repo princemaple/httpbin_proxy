@@ -1,8 +1,8 @@
-defmodule ApiDemoTest do
+defmodule HttpbinProxyTest do
   use ExUnit.Case
-  doctest ApiDemo
+  doctest HttpbinProxy
 
   test "greets the world" do
-    assert ApiDemo.hello() == :world
+    assert HttpbinProxy.hello() == :world
   end
 end
