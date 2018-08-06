@@ -12,7 +12,12 @@ defmodule HttpbinProxy.Router do
 
     conn =
       conn
+      |> IO.inspect()
       |> put_req_header("host", @host)
+      |> put_req_header(
+        "x-forward-for",
+        conn.remote_ip |> Tuple.to_list |> Enum.join(".")
+      )
 
     target =
       %URI{
