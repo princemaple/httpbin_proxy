@@ -7,6 +7,7 @@ defmodule HttpbinProxy.Application do
     children = [
       HttpbinProxy.Cache,
       HttpbinProxy.Lab,
+      {DynamicSupervisor, strategy: :one_for_one, name: LabWorkerSupervisor},
       Plug.Adapters.Cowboy2.child_spec(
         scheme: :http,
         plug: HttpbinProxy.Router,

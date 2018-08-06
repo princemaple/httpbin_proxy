@@ -10,7 +10,7 @@ defmodule HttpbinProxy.Router do
   post "/post" do
     my_own_post_data = %{a: 1, b: 2, x: "x"}
 
-    HttpbinProxy.Lab.compare(conn, my_own_post_data)
+    HttpbinProxy.LabWorker.start(conn, my_own_post_data)
 
     conn
     |> put_resp_header("x-implementation", "elixir")

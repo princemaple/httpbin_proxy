@@ -7,8 +7,8 @@ defmodule HttpbinProxy.Lab do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  def compare(conn, resp) do
-    GenServer.cast(__MODULE__, {:compare, conn, resp})
+  def compare(conn, body, upstream_body) do
+    GenServer.cast(__MODULE__, {:compare, conn, body, upstream_body})
   end
 
   def fetch_all do
@@ -19,9 +19,8 @@ defmodule HttpbinProxy.Lab do
     {:ok, :ets.new(:lab, [:duplicate_bag, :public, :named_table])}
   end
 
-  def handle_cast({:compare, conn, body}, ref) do
-    resp = HttpbinProxy.Bypass.run(conn)
-    pair = {body, resp.body}
+  def handle_cast({:compare, conn, body, upstream_body}, ref) do
+    pair = {body, upstream_body}
     :ets.insert(ref, {conn.request_path, pair})
     Logger.debug(inspect pair)
     {:noreply, ref}
