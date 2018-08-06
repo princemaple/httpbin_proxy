@@ -10,10 +10,18 @@ defmodule HttpbinProxy.Router do
   post "/post" do
     my_own_post_data = %{a: 1, b: 2, x: "x"}
 
+    HttpbinProxy.Lab.compare(conn, my_own_post_data)
+
     conn
     |> put_resp_header("x-implementation", "elixir")
     |> put_resp_header("content-type", "application/json")
     |> send_resp(:ok, Jason.encode!(my_own_post_data))
+  end
+
+  get "/lab" do
+    conn
+    |> put_resp_header("content-type", "application/json")
+    |> send_resp(:ok, Jason.encode!(HttpbinProxy.Lab.fetch_all()))
   end
 
   get "/cachable/*path" do
