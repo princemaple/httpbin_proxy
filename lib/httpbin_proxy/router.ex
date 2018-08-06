@@ -21,6 +21,15 @@ defmodule HttpbinProxy.Router do
     |> send_resp()
   end
 
+  post "/post" do
+    my_own_post_data = %{a: 1, b: 2, x: "x"}
+
+    conn
+    |> put_resp_header("x-implementation", "elixir")
+    |> put_resp_header("content-type", "application/json")
+    |> send_resp(:ok, Jason.encode!(my_own_post_data))
+  end
+
   match "*unknwon" do
     response = bypass(conn)
 
