@@ -1,21 +1,9 @@
 # HttpbinProxy
 
-**TODO: Add description**
+Commit by commit, this repo shows how to migrate an existing API service to Elixir.
 
-## Installation
+Httpbin is used as the existing api service to illustrate how to gradually build an
+Elixir implementation on top of that, while keeping the whole functionality working.
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `httpbin_proxy` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:httpbin_proxy, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/httpbin_proxy](https://hexdocs.pm/httpbin_proxy).
-
+GenServer and DynamicSupervisor are used to demo caching (general) and implementation
+comparison (business specific) functionalities.
