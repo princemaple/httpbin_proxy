@@ -7,7 +7,32 @@ defmodule HttpbinProxy.Router do
   plug :match
   plug :dispatch
 
+  get "/get" do
+    response = bypass(conn)
+
+    conn
+    |> Map.put(
+      :resp_headers,
+      [{"x-implementation", "elixir"} | response.headers]
+    )
+    |> Map.put(:status, response.status_code)
+    |> Map.put(:resp_body, response.body)
+    |> Map.put(:state, :set)
+    |> send_resp()
+  end
+
   match "*unknwon" do
+    response = bypass(conn)
+
+    conn
+    |> Map.put(:resp_headers, response.headers)
+    |> Map.put(:status, response.status_code)
+    |> Map.put(:resp_body, response.body)
+    |> Map.put(:state, :set)
+    |> send_resp()
+  end
+
+  defp bypass(conn) do
     {:ok, body, conn} = read_body(conn)
 
     conn =
@@ -27,19 +52,11 @@ defmodule HttpbinProxy.Router do
         query: conn.query_string
       }
 
-    response =
-      HTTPoison.request!(
-        conn.method |> String.downcase() |> String.to_existing_atom(),
-        URI.to_string(target),
-        body,
-        conn.req_headers
-      )
-
-    conn
-    |> Map.put(:resp_headers, response.headers)
-    |> Map.put(:status, response.status_code)
-    |> Map.put(:resp_body, response.body)
-    |> Map.put(:state, :set)
-    |> send_resp()
+    HTTPoison.request!(
+      conn.method |> String.downcase() |> String.to_existing_atom(),
+      URI.to_string(target),
+      body,
+      conn.req_headers
+    )
   end
 end
