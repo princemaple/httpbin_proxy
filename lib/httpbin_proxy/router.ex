@@ -16,6 +16,18 @@ defmodule HttpbinProxy.Router do
     |> send_resp(:ok, Jason.encode!(my_own_post_data))
   end
 
+  get "/cachable/*path" do
+    resp =
+      conn
+      |> Map.put(:request_path, "/" <> Path.join(path))
+      |> HttpbinProxy.Cache.fetch()
+
+    conn
+    |> put_resp_header("x-implementation", "elixir")
+    |> put_resp_header("content-type", "application/json")
+    |> send_resp(:ok, resp.body)
+  end
+
   match "*unknwon" do
     response = HttpbinProxy.Bypass.run(conn)
 

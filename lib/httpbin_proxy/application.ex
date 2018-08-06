@@ -5,6 +5,7 @@ defmodule HttpbinProxy.Application do
 
   def start(_type, _args) do
     children = [
+      HttpbinProxy.Cache,
       Plug.Adapters.Cowboy2.child_spec(
         scheme: :http,
         plug: HttpbinProxy.Router,
